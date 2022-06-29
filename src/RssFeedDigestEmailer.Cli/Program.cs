@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using System.Reflection;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using RssFeedDigestEmailer.Cli;
 using RssFeedDigestEmailer.Cli.Configuration;
@@ -6,6 +8,7 @@ using RssFeedDigestEmailer.Cli.Services;
 using RssFeedDigestEmailer.Cli.Services.Interfaces;
 
 using IHost host = Host.CreateDefaultBuilder(args)
+    .ConfigureHostConfiguration(config => config.AddUserSecrets(Assembly.GetExecutingAssembly(), true, false))
     .ConfigureServices((hostBuilderContext, services) => services
         .AddTransient<IRssService, RssService>()
         .AddTransient<IEmailService, EmailService>()
