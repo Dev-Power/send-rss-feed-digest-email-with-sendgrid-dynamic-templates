@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body { background-color: lightyellow; }
+        h2, h3 { color: green; margin-left: 40px; }
+        table { border-collapse: collapse; }
+        tr.separated td { border-top: 1px dashed black; padding: 5px; }
+        a { text-decoration: none; }
+        .postTitle { font-size: 20px; }
+        .readMoreButton {
+            background-color: #04AA6D;
+            border: none;
+            color: white;
+            padding: 8px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 12px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 2px;
+        }
+        .headerImage { padding-right: 10px; }
+    </style>
+</head>
+<body>
+<div>
+    <h2>Hello, {{recipientName}}</h2>
+    <h3>Here are the latest blog posts from Twilio Blog:</h3>
+    <ol>
+        {{#each blogPostList}}
+        <table>
+            <tr class="separated">
+                <td><img class="headerImage" src="{{this.HeaderImageUrl}}" width="200" height="112" /></td>
+                <td>
+                    <a class="postTitle" href="{{this.Link}}"> {{this.Title}} </a>
+                    <p>by <b>{{this.Author}}</b> - <b>{{this.PublishDate}}</b></p>
+                    {{#if this.Categories}}
+                    <p>Categories: {{this.Categories}}</p>
+                    {{/if}}
+                    <p>{{{this.Description}}}</p>
+                    <p>
+                        <a class="readMoreButton" href="{{this.Link}}">Read more</a>
+                    </p>
+                </td>
+            </tr>
+        </table>
+        {{/each}}
+    </ol>
+</div>
+<div>
+    <h2>Last Build Date: {{lastBuildDate}}</h2>
+</div>
+
+</body>
+</html>
