@@ -8,23 +8,24 @@ namespace RssFeedDigestEmailer.Cli.Services;
 
 public class EmailService : IEmailService
 {
+    private readonly ISendGridClient _sendGridClient;
     private readonly EmailSettings _emailSettings;
     private readonly SendGridSettings _sendGridSettings;
 
-    public EmailService(IOptions<EmailSettings> emailSettings, IOptions<SendGridSettings> sendGridSettings)
+    public EmailService(IOptions<EmailSettings> emailSettings, IOptions<SendGridSettings> sendGridSettings, ISendGridClient sendGridClient)
     {
+        _sendGridClient = sendGridClient;
         _emailSettings = emailSettings.Value;
         _sendGridSettings = sendGridSettings.Value;
     }
     
     public async Task SendTemplatedEmail(object dynamicTemplateData, string templateId)
     {
-        var client = new SendGridClient(_sendGridSettings.ApiKey);
         var from = new EmailAddress(_emailSettings.SenderEmailAddress, _emailSettings.SenderDisplayName);
         var to = new EmailAddress(_emailSettings.RecipientEmailAddress, _emailSettings.RecipientDisplayName);
         
         var msg = MailHelper.CreateSingleTemplateEmail(from, to, templateId, dynamicTemplateData);
-        var response = await client.SendEmailAsync(msg);
+        var response = await _sendGridClient.SendEmailAsync(msg);
         if (response.IsSuccessStatusCode)
         {
             Console.WriteLine("Email has been sent successfully");
