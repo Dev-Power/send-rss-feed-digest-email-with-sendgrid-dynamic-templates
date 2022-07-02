@@ -10,13 +10,11 @@ public class EmailService : IEmailService
 {
     private readonly ISendGridClient _sendGridClient;
     private readonly EmailSettings _emailSettings;
-    private readonly SendGridSettings _sendGridSettings;
 
-    public EmailService(IOptions<EmailSettings> emailSettings, IOptions<SendGridSettings> sendGridSettings, ISendGridClient sendGridClient)
+    public EmailService(IOptions<EmailSettings> emailSettings, ISendGridClient sendGridClient)
     {
         _sendGridClient = sendGridClient;
         _emailSettings = emailSettings.Value;
-        _sendGridSettings = sendGridSettings.Value;
     }
     
     public async Task SendTemplatedEmail(object dynamicTemplateData, string templateId)

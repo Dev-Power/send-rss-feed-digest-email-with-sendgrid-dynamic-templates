@@ -23,9 +23,8 @@ public class RssService : IRssService
     {
         using (_httpClient)
         using (HttpResponseMessage response = await _httpClient.GetAsync(_rssSettings.FeedUrl))
-        {
-            var rawRssFeedStream = await response.Content.ReadAsStreamAsync();
-            
+        using (var rawRssFeedStream = await response.Content.ReadAsStreamAsync())
+        { 
             var xmlDocument = new XmlDocument();
             xmlDocument.Load(rawRssFeedStream);
             
@@ -63,7 +62,7 @@ public class RssService : IRssService
                 blogInfo.BlogPosts.Add(blogPost);
             }
 
-            return blogInfo;
+            return blogInfo;   
         }
     }
 }
