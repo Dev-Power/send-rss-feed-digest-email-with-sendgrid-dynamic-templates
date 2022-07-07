@@ -2,7 +2,6 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using RssFeedDigestEmailer.Cli;
 using RssFeedDigestEmailer.Cli.Configuration;
 using RssFeedDigestEmailer.Cli.Services;
 using RssFeedDigestEmailer.Cli.Services.Interfaces;
@@ -17,19 +16,15 @@ using IHost host = Host.CreateDefaultBuilder(args)
     .ConfigureServices((hostBuilderContext, services) =>
     {
         services
-            .AddTransient<IRssService, RssService>()
+            .AddSingleton<HttpClient>()
             .AddTransient<IEmailService, EmailService>()
-            .AddTransient<IHtmlService, HtmlService>()
-            .AddTransient<IDataProvider, TwilioBlogDataProvider>()
-            .AddSingleton<HttpClient>();
+            .AddTransient<IDataProvider, JsonDataProvider>();
         
         services
             .AddSendGrid(options => options.ApiKey = hostBuilderContext.Configuration["SendGridSettings:ApiKey"]);
-        
-        services   
-            .Configure<EmailSettings>(hostBuilderContext.Configuration.GetSection("EmailSettings"))
-            .Configure<RssSettings>(hostBuilderContext.Configuration.GetSection("RssSettings"))
-            .Configure<EmailDataSettings>(hostBuilderContext.Configuration.GetSection("EmailDataSettings"));
+
+        services
+            .Configure<EmailSettings>(hostBuilderContext.Configuration.GetSection("EmailSettings"));
     })
     .Build();
 

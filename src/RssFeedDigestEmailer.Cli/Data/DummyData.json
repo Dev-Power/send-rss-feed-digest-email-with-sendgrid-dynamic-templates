@@ -1,0 +1,27 @@
+{
+  "subject": "Latest Posts - 07 July 2022",
+  "recipientName": "Volkan",
+  "lastBuildDate": "7 July 2022, 12:34",
+  "blogPostList": [
+    {
+      "title": "Automatically Forward Text Messages with No Code Using Twilio Studio",
+      "link": "https://www.twilio.com/blog/automatically-forward-text-messages-no-code-studio",
+      "headerImageUrl": "https://twilio-cms-prod.s3.amazonaws.com/images/Copy_of_C03_Blog_Text_2.width-808.png",
+      "description": "This article explains how to forward any incoming text messages sent to your Twilio phone number to another number automatically using a no-code solution called Twilio Studio.",
+      "author": "Ashley Boucher",
+      "publishDate": "06 July 2022",
+      "categories": [
+        "Code, Tutorials and Hacks"
+      ]
+    },
+    {
+      "title": "Super SIM now offers VPN connectivity for your IoT devices",
+      "link": "https://www.twilio.com/blog/vpn-iot-devices",
+      "headerImageUrl": "https://twilio-cms-prod.s3.amazonaws.com/images/VPN_-_Social_Banner.width-808.png",
+      "description": "I am excited to announce that Super SIM now has VPN (Virtual Private Network) support, enabling you to set up secure private networks between Twilio and your application data centers and have your Super SIM connected devices use these private networks. With regular Internet breakout, the traffic from devices using Super SIM will go over the Internet and get routed to your application data center. When VPN is used, the same traffic is sent over a secure and private tunnel as shown below:",
+      "author": "Vijay Devarapalli",
+      "publishDate": "06 July 2022",
+      "categories": []
+    }
+  ]
+}
