@@ -16,7 +16,6 @@ using IHost host = Host.CreateDefaultBuilder(args)
     .ConfigureServices((hostBuilderContext, services) =>
     {
         services
-            .AddSingleton<HttpClient>()
             .AddTransient<IEmailService, EmailService>()
             .AddTransient<IDataProvider, JsonDataProvider>();
         
