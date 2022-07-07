@@ -11,7 +11,8 @@ using SendGrid.Extensions.DependencyInjection;
 using IHost host = Host.CreateDefaultBuilder(args)
     .ConfigureHostConfiguration(config =>
     {
-        config.AddUserSecrets(Assembly.GetExecutingAssembly(), true, false);
+        config
+            .AddUserSecrets(Assembly.GetExecutingAssembly(), true, false);
     })
     .ConfigureServices((hostBuilderContext, services) =>
     {
@@ -19,6 +20,7 @@ using IHost host = Host.CreateDefaultBuilder(args)
             .AddTransient<IRssService, RssService>()
             .AddTransient<IEmailService, EmailService>()
             .AddTransient<IHtmlService, HtmlService>()
+            .AddTransient<IDataProvider, TwilioBlogDataProvider>()
             .AddSingleton<HttpClient>();
         
         services
@@ -26,9 +28,10 @@ using IHost host = Host.CreateDefaultBuilder(args)
         
         services   
             .Configure<EmailSettings>(hostBuilderContext.Configuration.GetSection("EmailSettings"))
-            .Configure<RssSettings>(hostBuilderContext.Configuration.GetSection("RssSettings"));
+            .Configure<RssSettings>(hostBuilderContext.Configuration.GetSection("RssSettings"))
+            .Configure<EmailDataSettings>(hostBuilderContext.Configuration.GetSection("EmailDataSettings"));
     })
     .Build();
 
-var consoleMailer = (ConsoleMailer) ActivatorUtilities.CreateInstance(host.Services, typeof(ConsoleMailer));
-await consoleMailer.Send();
+var emailService = (EmailService) ActivatorUtilities.CreateInstance(host.Services, typeof(EmailService));
+await emailService.SendTemplatedEmail();

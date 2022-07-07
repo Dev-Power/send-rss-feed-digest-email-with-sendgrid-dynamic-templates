@@ -29,30 +29,27 @@
 <div>
     <h2>Hello, {{recipientName}}</h2>
     <h3>Here are the latest blog posts from Twilio Blog:</h3>
-    <ol>
-        {{#each blogPostList}}
-        <table>
-            <tr class="separated">
-                <td><img class="headerImage" src="{{this.HeaderImageUrl}}" width="200" height="112" /></td>
-                <td>
-                    <a class="postTitle" href="{{this.Link}}"> {{this.Title}} </a>
-                    <p>by <b>{{this.Author}}</b> - <b>{{this.PublishDate}}</b></p>
-                    {{#if this.Categories}}
-                    <p>Categories: {{this.Categories}}</p>
-                    {{/if}}
-                    <p>{{{this.Description}}}</p>
-                    <p>
-                        <a class="readMoreButton" href="{{this.Link}}">Read more</a>
-                    </p>
-                </td>
-            </tr>
-        </table>
-        {{/each}}
-    </ol>
+    {{#each blogPostList}}
+    <table>
+        <tr class="separated">
+            <td><img class="headerImage" src="{{this.headerImageUrl}}" width="200" height="112"></td>
+            <td>
+                <a class="postTitle" href="{{this.Link}}"> {{this.title}} </a>
+                <p>by <b>{{this.author}}</b> - <b>{{this.publishDate}}</b></p>
+                {{#if this.categories}}
+                <p>Categories: {{this.categories}}</p>
+                {{/if}}
+                <p>{{{this.description}}}</p>
+                <p>
+                    <a class="readMoreButton" href="{{this.link}}">Read more</a>
+                </p>
+            </td>
+        </tr>
+    </table>
+    {{/each}}
 </div>
 <div>
     <h2>Last Build Date: {{lastBuildDate}}</h2>
 </div>
-
 </body>
 </html>
