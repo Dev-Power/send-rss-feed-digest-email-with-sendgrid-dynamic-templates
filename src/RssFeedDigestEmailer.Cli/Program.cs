@@ -2,7 +2,6 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using RssFeedDigestEmailer.Cli;
 using RssFeedDigestEmailer.Cli.Configuration;
 using RssFeedDigestEmailer.Cli.Services;
 using RssFeedDigestEmailer.Cli.Services.Interfaces;
@@ -21,7 +20,7 @@ using IHost host = Host.CreateDefaultBuilder(args)
             .AddTransient<IEmailService, EmailService>()
             .AddTransient<IHtmlService, HtmlService>()
             .AddTransient<IDataProvider, TwilioBlogDataProvider>()
-            .AddSingleton<HttpClient>();
+            .AddHttpClient("RssServiceHttpClient");
         
         services
             .AddSendGrid(options => options.ApiKey = hostBuilderContext.Configuration["SendGridSettings:ApiKey"]);

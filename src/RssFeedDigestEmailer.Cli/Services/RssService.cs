@@ -9,20 +9,20 @@ namespace RssFeedDigestEmailer.Cli.Services;
 public class RssService : IRssService
 {
     private readonly IHtmlService _htmlService;
-    private readonly HttpClient _httpClient;
+    private readonly IHttpClientFactory _httpClientFactory;
     private readonly RssSettings _rssSettings;
 
-    public RssService(IHtmlService htmlService, HttpClient httpClient, IOptions<RssSettings> rssSettings)
+    public RssService(IHtmlService htmlService, IHttpClientFactory httpClientFactory, IOptions<RssSettings> rssSettings)
     {
         _htmlService = htmlService;
-        _httpClient = httpClient;
         _rssSettings = rssSettings.Value;
+        _httpClientFactory = httpClientFactory;
     }
     
     public async Task<BlogInfo> GetBlogInfo()
     {
-        using (_httpClient)
-        using (HttpResponseMessage response = await _httpClient.GetAsync(_rssSettings.FeedUrl))
+        var httpClient = _httpClientFactory.CreateClient("RssServiceHttpClient");
+        using (HttpResponseMessage response = await httpClient.GetAsync(_rssSettings.FeedUrl))
         using (var rawRssFeedStream = await response.Content.ReadAsStreamAsync())
         { 
             var xmlDocument = new XmlDocument();
